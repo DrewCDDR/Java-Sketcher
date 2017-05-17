@@ -347,6 +347,7 @@ public class VisualWindow extends javax.swing.JFrame{
        while(i < PLACES.length && sw){
            if (PLACES[i].isNothing()) {
                PLACES[i].setIsAirport(true);
+               totalCost += PLACES[i].getAriportCost();
                sw = false;
            }
            i++;
@@ -365,6 +366,7 @@ public class VisualWindow extends javax.swing.JFrame{
                if (exilied) {
                    PLACES[i].setIsAirport(true);
                    System.out.println("\tConstrucción, aereopuerto en " +PLACES[i].getData());
+                   totalCost += PLACES[i].getAriportCost();
                }else{
                    step_3_checkLonelyPlacesPossibilites();
                    if(!step_4_lonelyBecomesUnlonely()){
