@@ -13,7 +13,6 @@ package Visual;
 public class Display extends java.awt.Canvas implements Runnable{
     
     private int c;
-    private boolean IsGraphReady;
     
     @Override
     public void run() {

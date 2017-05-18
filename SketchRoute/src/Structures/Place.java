@@ -175,6 +175,7 @@ public class Place {
                     System.out.println("\tDesconexión, entre " +Visual.VisualWindow.PLACES[i].getData() +" y " + this.data);
                 }
             }
+//            VisualWindow.totalCost += this.getAriportCost();
             this.img = Assets.ImageLibrary.PLACE_STATE_AIRPORT;
         }
     }

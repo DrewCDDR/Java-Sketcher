@@ -465,62 +465,83 @@ public class VisualWindow extends javax.swing.JFrame{
 
         while (!Done) {
             if (!one) {
-                int p = airportIndex;
-                if (PLACES[cities[airportIndex]].isNothing()) {
-                    if (checkAllAirports_ReturnBestOption() >= 0) {
-                        PLACES[checkAllAirports_ReturnBestOption()].setIsAirport(true);
-                        p = checkAllAirports_ReturnBestOption();
-                    }else{
-                        PLACES[cities[airportIndex]].setIsAirport(true);
-                        p = cities[airportIndex];
-                    }
-                    System.out.println("\tConstrucción, aereopuerto en " +PLACES[p].getData());
-                    totalCost += PLACES[p].getAriportCost();
-                    one = true;
-                    airportIndex++;
-                    i++;
-                }
-            }
-
-            if (PLACES[i].isNothing() || i < PLACES.length) {
-                step_1_setAirportsPossibilites();
-                if(actions != null){
-                    if(step_2_doSomething()){
-                        i++;
-                    }else{
-                        if(imDone){
-                            step_3_checkLonelyPlacesPossibilites();
-                            if(!(getEmptyPlacesCount() > 1)){
-                                if (step_4_lonelyBecomesUnlonely()) {
-                                    i++;
-                                }else{
-                                    step_5_IllBeForeverAlone();
-                                }
-                            }else{
-                                if (PLACES[cities[airportIndex]].isNothing()) {
-                                    PLACES[cities[airportIndex]].setIsAirport(true);
-                                    System.out.println("\tConstrucción, aereopuerto en " +PLACES[cities[airportIndex]].getData());
-                                    totalCost += PLACES[cities[airportIndex]].getAriportCost();
-                                    airportIndex++;
-                                    i++;
-                                }
-                            }
-                        }else{
-                            i++;
+                for (int j = 0; j < PLACES.length; j++) {
+                    boolean isLonely = true;
+                    for (int k = 0; k < PLACES.length; k++) {
+                        if (PLACES[j].getPossiblePaths()[k]) {
+                            isLonely = false;
                         }
                     }
-                }else{
-                    if(PLACES[cities[airportIndex]].isNothing()){
-                        PLACES[cities[airportIndex]].setIsAirport(true);
-                        System.out.println("\tConstrucción, aereopuerto en " +PLACES[cities[airportIndex]].getData());
-                        totalCost += PLACES[cities[airportIndex]].getAriportCost();
+                    if (isLonely) {
+                        PLACES[j].setIsAirport(true);
+                        System.out.println("\tConstrucción, aereopuerto en " +PLACES[j].getData());
+                        totalCost += PLACES[j].getAriportCost();
                         airportIndex++;
                         i++;
                     }
                 }
-            }else{
-                i++;
+                if(airportIndex < PLACES.length){
+                    int p = airportIndex;
+                    if (PLACES[cities[airportIndex]].isNothing()) {
+                        if (checkAllAirports_ReturnBestOption() >= 0) {
+                            PLACES[checkAllAirports_ReturnBestOption()].setIsAirport(true);
+                            p = checkAllAirports_ReturnBestOption();
+                        }else{
+                            PLACES[cities[airportIndex]].setIsAirport(true);
+                            p = cities[airportIndex];
+                        }
+                        System.out.println("\tConstrucción, aereopuerto en " +PLACES[p].getData());
+                        totalCost += PLACES[p].getAriportCost();
+                        one = true;
+                        airportIndex++;
+                        i++;
+                    }
+                }
             }
+            if(airportIndex < PLACES.length){
+                if (PLACES[i].isNothing() || i < PLACES.length) {
+                    step_1_setAirportsPossibilites();
+                    if(actions != null){
+                        if(step_2_doSomething()){
+                            i++;
+                        }else{
+                            if(imDone){
+                                step_3_checkLonelyPlacesPossibilites();
+                                if(!(getEmptyPlacesCount() > 1)){
+                                    if (step_4_lonelyBecomesUnlonely()) {
+                                        i++;
+                                    }else{
+                                        step_5_IllBeForeverAlone();
+                                    }
+                                }else{
+                                    if (PLACES[cities[airportIndex]].isNothing()) {
+                                        PLACES[cities[airportIndex]].setIsAirport(true);
+                                        System.out.println("\tConstrucción, aereopuerto en " +PLACES[cities[airportIndex]].getData());
+                                        totalCost += PLACES[cities[airportIndex]].getAriportCost();
+                                        airportIndex++;
+                                        i++;
+                                    }else{
+    //                                    i++;
+                                    }
+                                }
+                            }else{
+                                i++;
+                            }
+                        }
+                    }else{
+                        if(PLACES[cities[airportIndex]].isNothing()){
+                            PLACES[cities[airportIndex]].setIsAirport(true);
+                            System.out.println("\tConstrucción, aereopuerto en " +PLACES[cities[airportIndex]].getData());
+                            totalCost += PLACES[cities[airportIndex]].getAriportCost();
+                            airportIndex++;
+                            i++;
+                        }
+                    }
+                }else{
+                    i++;
+                }
+            }
+//            System.out.println("i: " +i);
             if (i == PLACES.length) {
                 Done = true;
                 step_6_lastCheck();
