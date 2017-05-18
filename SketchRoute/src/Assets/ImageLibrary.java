@@ -14,6 +14,9 @@ public class ImageLibrary {
     public static java.awt.image.BufferedImage PLACE_STATE_ROAD;
     public static java.awt.image.BufferedImage PLACE_STATE_AIRPORT;
     
+    /**
+     * This method gives all the image variables an actual image...
+     */
     public static void loadIamges(){
         try{
             PLACE_STATE_NOTHING = javax.imageio.ImageIO.read((new java.io.File("assets/place_state_nothing.png")));

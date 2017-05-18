@@ -6,14 +6,14 @@
 package Visual;
 
 /**
- *
+ * A class that extends the Canvas class in order to draw graphics.
  * @author cddr
+ * @see java.awt.Canvas
  */
 public class Display extends java.awt.Canvas implements Runnable{
     
     private int c;
-    private boolean IsGraphReady; 
-//    private Structures.Place[] p;
+    private boolean IsGraphReady;
     
     @Override
     public void run() {
@@ -66,42 +66,5 @@ public class Display extends java.awt.Canvas implements Runnable{
                 getBufferStrategy().show();
             }
         }
-    }
-    
-    @Override
-    public void paint(java.awt.Graphics g){
-        
-//        super.paint(g);
-        /*nodes.stream().filter((n) -> (n.isValid())).forEachOrdered((n) -> {
-            g.setColor(Color.white);
-            g.fillOval(n.getX()-radius/2, n.getY()-radius/2, radius, radius);
-            g.setColor(Color.black);
-            g.drawString(n.getData(), n.getX(), n.getY());
-        });*/
-        /*if (IsGraphReady) {
-            g.setColor(Color.red);
-            for (int i = 0; i < graph.length; i++) {
-                for (int j = 0; j < graph.length; j++) {
-                    if (graph[i][j] == 1) {
-                        Node ni = nodes.get(i), nf = nodes.get(j);
-                        g.drawLine(ni.getX(), ni.getY(), nf.getX(), nf.getY());
-                    }
-                }
-            }
-        }*/
-    }
-
-    /**
-     * @return the IsGraphReady
-     */
-    public boolean isIsGraphReady() {
-        return IsGraphReady;
-    }
-
-    /**
-     * @param IsGraphReady the IsGraphReady to set
-     */
-    public void setIsGraphReady(boolean IsGraphReady) {
-        this.IsGraphReady = IsGraphReady;
     }
 }

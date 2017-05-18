@@ -10,10 +10,7 @@ package Visual;
  * @author cddr
  */
 public class InfoWindow extends javax.swing.JFrame{
-    
-//    private boolean IsGraphReady = false;
-//    int[] airports;
-//    int[][] landscape, prices, routes;
+
     javax.swing.JLabel nameLabel, airportLabel;
     javax.swing.JButton add, remv, sketch;
     javax.swing.JTextField name, airport;
@@ -21,6 +18,11 @@ public class InfoWindow extends javax.swing.JFrame{
     javax.swing.JTable table;
     private Structures.Place[] places;
     
+    /**
+     * This method creates the JFrame of the window that the user uses to set
+     * the info needed for the program
+     * @throws java.awt.HeadlessException 
+     */
     public InfoWindow() throws java.awt.HeadlessException {
         setLayout(null);
         setSize(610, 524);
@@ -34,7 +36,9 @@ public class InfoWindow extends javax.swing.JFrame{
 //        setLocationRelativeTo(null);
         setVisible(true);
     }
-    
+    /**
+     * This method sets the grafic user interface for this window.
+     */
     public void setDataUI(){
         nameLabel = new javax.swing.JLabel("Nombre: ");
         nameLabel.setBackground(java.awt.Color.gray);
@@ -135,6 +139,10 @@ public class InfoWindow extends javax.swing.JFrame{
         add(movement);
     }
     
+    /**
+     * This method adds a city or place to the table.
+     * @param evt that is set when the user click the button. 
+     */
     public void AddActionPerformed(java.awt.event.ActionEvent evt){
         String validation = name.getText();
         String confirmation = airport.getText();
@@ -163,6 +171,12 @@ public class InfoWindow extends javax.swing.JFrame{
             javax.swing.JOptionPane.showMessageDialog(null,"Campos vacios.", "Error #1", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
     }
+    
+    /**
+     * This method removes a specified city or place that has been selected from
+     * the table.
+     * @param evt that is set when the user click the button.
+     */
     public void RemoveActionPerformed(java.awt.event.ActionEvent evt){
         int rowIndex = table.getSelectedRow();
         if (rowIndex >= 0) {
@@ -172,6 +186,14 @@ public class InfoWindow extends javax.swing.JFrame{
         }
         createLandscape();
     }
+    
+    /**
+     * This method solves the landscape specified by the user whith the
+     * construction airports, connections or disconnections, and says the total
+     * cost of the whole operation. 
+     * @param evt that is set when the user click the button.
+     * @see VisualWindow
+     */
     public void SketchActionPerformed(java.awt.event.ActionEvent evt){
         System.out.println("Sketch started:");
         createLandscape();
@@ -181,7 +203,13 @@ public class InfoWindow extends javax.swing.JFrame{
         javax.swing.JOptionPane.showMessageDialog(null,"Costo total: " +VisualWindow.totalCost, "Información", javax.swing.JOptionPane.INFORMATION_MESSAGE);
     }
  
-    
+    /**
+     * This method, in order to set the info that the Visual Window will use,
+     * turns the table into a bi-dimesional array, then it creates the array of 
+     * the class Place with the size of the number of cities that will be used.
+     * @see     Structures.Place
+     * @see     VisualWindow
+     */
     public void createLandscape(){
         javax.swing.table.DefaultTableModel m = (javax.swing.table.DefaultTableModel) table.getModel();
         places = new Structures.Place[m.getRowCount()];
@@ -229,22 +257,38 @@ public class InfoWindow extends javax.swing.JFrame{
             }
         }
     }
-    
+    /**
+     * This Class extends the java DefaultTableModel in order to do specified 
+     * methods that this class does not have.
+     * @see      javax.swing.table.DefaultTableModel
+     */
     private class CustomModel extends javax.swing.table.DefaultTableModel{
-        
+        /**
+         * Sends to its father the main info of a table.
+         * @param columnNames The headers or column info.
+         * @param rowCount the numver of rows un the table.
+         */
         public CustomModel(Object[] columnNames, int rowCount) {
             super(columnNames, rowCount);
         }
         
+        /**
+         * This method looks whether a cell is editable or not.
+         * @param row the row index of the cell.
+         * @param column the column index of the cell.
+         * @return If the specified cell in a specified row and column is
+         * editable or not.
+         */
         @Override
         public boolean isCellEditable(int row, int column) {
             return ((column != 1) && !(column >=  row+2));
         }
         
-        public java.util.Vector getColumnIdentifiers(){
-            return columnIdentifiers;
-        }
-        
+        /**
+         * This methods deletes or removes a specified column in a specified
+         * index from the table.
+         * @param columnIndex The index of the column that is desired to remove.
+         */
         public void removeColumn(int columnIndex) {
             if (columnIndex != getColumnCount()-1) {
                 for (int i = 0; i < this.getRowCount(); i++) {

@@ -8,7 +8,6 @@ package Visual;
 import java.awt.HeadlessException;
 
 /**
- *
  * @author cddr
  */
 public class VisualWindow extends javax.swing.JFrame{
@@ -40,6 +39,9 @@ public class VisualWindow extends javax.swing.JFrame{
         
     }
     
+    /**
+     * This method sets the Graphic Interface or de displayable interface.
+     */
     public void setGI(){
         canvas = new Display();
         canvas.setSize(608, 522);
@@ -50,12 +52,10 @@ public class VisualWindow extends javax.swing.JFrame{
         add(canvas);
     }
     
-    public static void showPlaces(){
-        for (int i = 0; i < PLACES.length; i++) {
-            System.out.print(i +": " +PLACES[i].getData() +"\t");
-        }
-    }
-    
+    /**
+     * This method sets up all the information that may be needed for setting up
+     * the landscape of the user.
+     */
     public static void step_0_SetUP(){
         airports = new int[PLACES.length];
         cities = new int[PLACES.length];
@@ -82,6 +82,9 @@ public class VisualWindow extends javax.swing.JFrame{
         }
     }
     
+    /**
+     * This method sets up all the information that the step number two may need.
+     */
     public static void step_1_setAirportsPossibilites(){
         int possibleActions = 0;
         //GETTIN' ALL AIRPORTS POSSIBLE CONNECTIONS NUMBER
@@ -167,6 +170,13 @@ public class VisualWindow extends javax.swing.JFrame{
         }
     }
     
+    /**
+     * This method see the best action that can be performed by all the
+     * cities or places in the current situation by setting an airport or 
+     * setting a connection.
+     * @return True if a choice of building an airport or an airport with a 
+     * connection, False if not.
+     */
     public static boolean step_2_doSomething(){
         imDone = true;
         boolean choiceMade = false;
@@ -207,6 +217,9 @@ public class VisualWindow extends javax.swing.JFrame{
         }
     }
     
+    /**
+     * This method sets all the necesary information that the step four may need.
+     */
     public static void step_3_checkLonelyPlacesPossibilites(){
         boolean sw = true;
         int possibleActions = 0, index = 0, i = 0;
@@ -297,6 +310,13 @@ public class VisualWindow extends javax.swing.JFrame{
         }
     }
             
+    /**
+     * This method will see the best action that can be performed by all the
+     * cities or places in the current situation by setting an airport or an
+     * airport with a connection.
+     * @return True if a choice of building an airport or an airport with a 
+     * connection, False if not.
+     */
     public static boolean step_4_lonelyBecomesUnlonely(){
         boolean choiceMade = false;
         int check = 0;
@@ -340,13 +360,16 @@ public class VisualWindow extends javax.swing.JFrame{
             return false;
         }
     }
-        
+    /**
+     * This method checks a lonely place that should have an airport.
+     */
    public static void step_5_IllBeForeverAlone(){
        boolean sw = true;
        int i = 0;
        while(i < PLACES.length && sw){
            if (PLACES[i].isNothing()) {
                PLACES[i].setIsAirport(true);
+               System.out.println("\tConstrucción, aereopuerto en " +PLACES[i].getData());
                totalCost += PLACES[i].getAriportCost();
                sw = false;
            }
@@ -354,6 +377,10 @@ public class VisualWindow extends javax.swing.JFrame{
        }
    }
    
+   /**
+    * This method is a revision in order to see if all it's fine, if not this 
+    * method would turn everything in order to be fine.
+    */
    public static void step_6_lastCheck(){
        for (int i = 0; i < PLACES.length; i++) {
            if (PLACES[i].isNothing()) {
@@ -376,7 +403,10 @@ public class VisualWindow extends javax.swing.JFrame{
            }
        }
    }
-   
+   /**
+    * This method find the best airport that can be built.
+    * @return The index of the city or place that should have an airport built.
+    */
    public static int checkAllAirports_ReturnBestOption(){
         boolean sw = true;
         boolean[] passed;
@@ -422,6 +452,9 @@ public class VisualWindow extends javax.swing.JFrame{
        return sameCostIndexes[sameCostIndexes.length -1];
    }
     
+   /**
+    * This method solves the situation that the user proposed.
+    */
     public static void buildLandscape(){
         boolean Done = false;
         boolean one = false;
@@ -494,7 +527,11 @@ public class VisualWindow extends javax.swing.JFrame{
             }
         }
     }
-    
+    /**
+     * This method counts the number of cities or places that are "disconnected".
+     * @return The number of cities or places that aren't either a road or has
+     * an airport built in it.
+     */
     public static int getEmptyPlacesCount(){
         int c = 0;
         for (int i = 0; i < PLACES.length; i++) {
